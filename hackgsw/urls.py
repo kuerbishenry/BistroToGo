@@ -17,6 +17,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from django.contrib.auth import views as auth_views
+from . import views
 
 
 urlpatterns = [
@@ -24,5 +25,7 @@ urlpatterns = [
     path('login/', auth_views.LoginView.as_view(), name='login'),
     path('logout/', auth_views.LogoutView.as_view(), name='logout'),
     path("admin/", admin.site.urls),
-    path("order/", include("order.urls"))
+    path("order/", include("order.urls")),   # Notice the comma at the end
+    path('profile/update/', views.profile_update, name='profile_update'),
 ]
+
