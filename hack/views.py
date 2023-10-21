@@ -3,7 +3,7 @@ from django.shortcuts import render
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.shortcuts import render, redirect
-from Forms import *
+from .Forms import *
 
 from django.contrib.auth.models import User
 
@@ -58,7 +58,7 @@ def profile_update(request):
             profile = form.save(commit=False)
             profile.user = request.user
             profile.save()
-            return redirect('some_view_name')  # redirect to a success page or something similar
+            return render(request, 'orderScreen.html') # redirect to a success page or something similar
     else:
         form = UserProfileForm(instance=instance)
 
