@@ -97,3 +97,17 @@ def renderorder(request):
         return render(request, 'orderScreen.html')
     else:
         return render(request, 'login.html')
+
+
+def select_option_view(request):
+    if request.method == 'POST':
+        form = SelectionForm(request.POST)
+        if form.is_valid():
+            selected_option = form.cleaned_data['selected_option']
+            # You can perform some action with the selected_option here
+            # For example, return it as a response or use it in a function
+            return render(request, 'orderScreen.html', {'selected_option': selected_option})
+    else:
+        form = SelectionForm()
+
+    return render(request, 'select_option_template.html', {'form': form})
