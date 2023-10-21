@@ -8,7 +8,7 @@
     <form method="post">
         {% csrf_token %}
         {{ form.as_ul }}
-        <button type="submit">Update Profile</button>
+        <a href="{% url 'order' %}" class="btn btn-primary">Login</a>
     </form>
 
 </body>

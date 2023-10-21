@@ -27,7 +27,7 @@ def signup(request):
                 return render(request, 'orderScreen.html')
                 # Redirect to a success page or the home page
             else:
-                return render(request, 'path_to_template.html')  # Replace 'home' with your desired URL name
+                return redirect('profile_update')  # Replace 'home' with your desired URL name
     else:
         form = UserCreationForm()
     return render(request, 'signup.html', {'form': form})
@@ -46,13 +46,13 @@ def login_view(request):
                     return render(request, 'orderScreen.html')
                 # Redirect to a success page or the home page
                 else:
-                    return render(request, 'path_to_template.html')
+                    return redirect('profile_update')
             else:
                 # User does not exist, provide a sign-up option
                 return render(request, 'signup.html')
     else:
         form = AuthenticationForm()
-    return render(request, 'login.html', {'form': form})
+        return render(request, 'login.html', {'form': form})
 
 
 
@@ -90,3 +90,10 @@ def user_has_completed_form(user):
 
     return False
 
+
+def renderorder(request):
+    if user_has_completed_form:
+        
+        return render(request, 'orderScreen.html')
+    else:
+        return render(request, 'login.html')
