@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bistro Food Ordering System</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: rgb(182, 51, 51);
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .menu-column {
+            width: 30%;
+            float: left;
+            margin-right: 5%;
+        }
+        .menu-item {
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<p>You selected: {{ selected_option }}</p>
+<body>
+    <div class="container">
+        <h1>Welcome to the Clark University Bistro Food Ordering System!</h1>
+
+        <div class="menu-column">
+            <h2>Dish</h2>
+            <div class="menu-item">Bagel with Cream Cheese: $3.99</div>
+            <div class="menu-item">Breakfast Sandwich: $5.99</div>
+            <div class="menu-item">2 Eggs any style: $6.49</div>
+            <div class="menu-item">Box of Cereal: $3.99</div>
+            <div class="menu-item">2 Slices of French Toast: $4.99</div>
+            <div class="menu-item">Macaroni and Cheese: $5.99</div>
+            <div class="menu-item">Cheese Manicotti: $8.99</div>
+            <div class="menu-item">Spaghetti with Meatballs: $6.49</div>
+            <div class="menu-item">Vegetable Lasagna: $6.99</div>
+            <div class="menu-item">Chicken Parmesan: $7.99</div>
+            <div class="menu-item">Grilled Cheese and Tomato: $4.99</div>
+            <div class="menu-item">Garden Burger: $6.49</div>
+            <div class="menu-item">Chicken Patty Sandwich: $4.99</div>
+            <div class="menu-item">Hot Dog: $1.99</div>
+        </div>
+        <div class="menu-column">
+            <h2>Sides</h2>
+            <div class="menu-item">French Fries: $2.99</div>
+            <div class="menu-item">Onion Rings: $3.49</div>
+            <div class="menu-item">Coleslaw: $1.99</div>
+            <div class="menu-item">Mashed Potatoes: $2.79</div>
+            <div class="menu-item">Sweet Potato Fries: $3.29</div>
+            <div class="menu-item">Garlic Bread: $2.49</div>
+            <div class="menu-item">Side Salad: $2.99</div>
+            <div class="menu-item">Steamed Vegetables: $3.59</div>
+            <div class="menu-item">Rice Pilaf: $2.89</div>
+            <div class="menu-item">Corn on the Cob: $1.99</div>
+            <div class="menu-item">Macaroni and Cheese: $3.49</div>
+            <div class="menu-item">Grilled Asparagus: $3.79</div>
+            <div class="menu-item">Breaded Mozzarella Sticks: $4.29</div>
+            <div class="menu-item">Fruit Salad: $3.99</div>
+            <div class="menu-item">Roasted Potatoes: $2.99</div>
+        </div>
+        <div style="clear:both;"></div> <!-- Clear the floats after the columns -->
+        <form id="orderForm">
+            <label for="item">Select an item:</label>
+            <select id="item" class="menu-item">
+                <option value="Bagel with Cream Cheese">Bagel with Cream Cheese</option>
+                <option value="Breakfast Sandwich">Breakfast Sandwich</option>
+                <option value="2 Eggs any style">2 Eggs any style</option>
+                <option value="Box of Cereal">Box of Cereal</option>
+                <option value="2 Slices of French Toast">2 Slices of French Toast</option>
+                <option value="Beef Burger">Beef Burger</option>
+                <option value="Grilled Cheese and Tomato">Grilled Cheese and Tomato</option>
+                <option value="Garden Burger">Garden Burger</option>
+                <option value="Chicken Patty Sandwich">Chicken Patty Sandwich</option>
+                <option value="Hot Dog">Hot Dog</option>
+                <option value="Macaroni and Cheese">Macaroni and Cheese</option>
+                <option value="Cheese Manicotti">Cheese Manicotti</option>
+                <option value="Spaghetti with Meatballs">Spaghetti with Meatballs</option>
+                <option value="Vegetable Lasagna">Vegetable Lasagna</option>
+                <option value="Chicken Parmesan">Chicken Parmesan</option>
+                <option value="French Fries">French Fries</option>
+                <option value="Onion Rings">Onion Rings</option>
+                <option value="Coleslaw">Coleslaw</option>
+                <option value="Mashed Potatoes">Mashed Potatoes</option>
+                <option value="Sweet Potato Fries">Sweet Potato Fries</option>
+                <option value="Garlic Bread">Garlic Bread</option>
+                <option value="Side Salad">Side Salad</option>
+                <option value="Steamed Vegetables">Steamed Vegetables</option>
+                <option value="Rice Pilaf">Rice Pilaf</option>
+                <option value="Corn on the Cob">Corn on the Cob</option>
+                <option value="Macaroni and Cheese">Macaroni and Cheese</option>
+                <option value="Grilled Asparagus">Grilled Asparagus</option>
+                <option value="Breaded Mozzarella Sticks">Breaded Mozzarella Sticks</option>
+                <option value="Fruit Salad">Fruit Salad</option>
+                <option value="Roasted Potatoes">Roasted Potatoes</option>
+            </select>
+            <br>
+            <label for="quantity">Quantity:</label>
+            <input type="number" id="quantity" class="menu-item" min="1" value="1">
+            <br>
+            <button type="button" onclick="addItem()">Add to Order</button>
+            <br><br>
+            <button type="button" onclick="processOrder()">Order</button>
+        </form>
+        <h2>Order Summary:</h2>
+        <ul id="orderSummary"></ul>
+        <h3>Total Cost: $<span id="totalCost">0.00</span></h3>
+    </div>
+
+    <script>
+        let order = {};
+        let menu = {
+            "Bagel with Cream Cheese": 3.99,
+            "Breakfast Sandwich": 5.99,
+            "2 Eggs any style": 6.49,
+            "Box of Cereal": 3.99,
+            "2 Slices of French Toast": 4.99,
+            "Beef Burger": 5.99,
+            "Grilled Cheese and Tomato": 4.99,
+            "Garden Burger": 6.49,
+            "Chicken Patty Sandwich": 4.99,
+            "Hot Dog": 1.99,
+            "Macaroni and Cheese": 5.99,
+            "Cheese Manicotti": 8.99,
+            "Spaghetti with Meatballs": 6.49,
+            "Vegetable Lasagna": 6.99,
+            "Chicken Parmesan": 7.99
+        };
+    
+        let sides = {
+            "French Fries": 2.99,
+            "Onion Rings": 3.49,
+            "Coleslaw": 1.99,
+            "Mashed Potatoes": 2.79,
+            "Sweet Potato Fries": 3.29,
+            "Garlic Bread": 2.49,
+            "Side Salad": 2.99,
+            "Steamed Vegetables": 3.59,
+            "Rice Pilaf": 2.89,
+            "Corn on the Cob": 1.99,
+            "Macaroni and Cheese": 3.49,
+            "Grilled Asparagus": 3.79,
+            "Breaded Mozzarella Sticks": 4.29,
+            "Fruit Salad": 3.99,
+            "Roasted Potatoes": 2.99
+        };
+    
+        function addItem() {
+            const item = document.getElementById('item').value;
+            const quantity = parseInt(document.getElementById('quantity').value);
+
+            // Check if the selected item is a meal or a side
+            const isMeal = menu[item] !== undefined;
+            const isSide = sides[item] !== undefined;
+
+            // Count the number of meals and sides in the order
+            const mealCount = Object.keys(order).filter(item => menu[item] !== undefined).length;
+            const sideCount = Object.keys(order).filter(item => sides[item] !== undefined).length;
+            
+
+
+            // If the selected item is a meal, it is not in the order, and there are fewer than one meal in the order, add it to the order
+            if (isMeal && mealCount === 0 && sideCount < 3) {
+                order[item] = quantity;
+            } 
+            // If the selected item is a side, it is not in the order, and there are fewer than two sides in the order, add it to the order
+            else if (isSide && sideCount < 2) {
+                order[item] = quantity;
+            }
+            else if (isSide && sideCount < 3) {
+                if (mealCount == 0) {
+                    order[item] = quantity
+                }
+            }
+
+            updateOrderSummary();
+        }
+
+        function updateOrderSummary() {
+            const orderSummary = document.getElementById('orderSummary');
+            const totalCostElement = document.getElementById('totalCost');
+            let summaryHTML = '';
+            let totalCost = 0;
+
+            for (const item in order) {
+                const price = isMeal(item) ? menu[item] : sides[item];
+                const quantity = order[item];
+                totalCost += price * quantity;
+                summaryHTML += `<li>${item}: ${quantity}</li>`;
+            }
+
+            orderSummary.innerHTML = summaryHTML;
+            totalCostElement.textContent = totalCost.toFixed(2);
+        }
+
+        // Function to check if an item is a meal
+        function isMeal(item) {
+            return menu[item] !== undefined;
+        }
+
+    
+        function processOrder() {
+            // Add logic here to process the order, e.g., sending it to a server, etc.
+            alert('Order processed successfully!');
+            // You can reset the order summary and total cost here if needed
+            order = {};
+            updateOrderSummary();
+        }
+    </script>
+    
+
+    <p>Click the button below to go to the home page.</p>
+    <a href="{% url 'index' %}" class="btn btn-primary">Login</a>
+</body>
+</html>
