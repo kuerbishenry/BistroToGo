@@ -261,7 +261,7 @@
             let totalCost = 0;
 
             for (const item in order) {
-                const price = isMeal(item) ? menu[item] : sides[item];
+                const price = menu[item] || sides[item]; // Use menu[item] if it's in menu, otherwise use sides[item]
                 const quantity = order[item];
                 totalCost += price * quantity;
                 summaryHTML += `<li>${item}: ${quantity}</li>`;
@@ -269,7 +269,7 @@
 
             orderSummary.innerHTML = summaryHTML;
             totalCostElement.textContent = totalCost.toFixed(2);
-        }
+            }
 
         function processOrder() {
             // Add logic here to process the order, e.g., sending it to a server, etc.
