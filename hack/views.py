@@ -24,7 +24,7 @@ def signup(request):
             user = form.save()
             login(request, user)# Log in the user after registration
             if (user_has_completed_form(user)):
-                return render(request, 'orderScreen.html')
+                return redirect('order')
                 # Redirect to a success page or the home page
             else:
                 return redirect('profile_update')  # Replace 'home' with your desired URL name
@@ -43,7 +43,7 @@ def login_view(request):
             if user:
                 login(request, user)
                 if (user_has_completed_form(user)):
-                    return render(request, 'orderScreen.html')
+                    return redirect('order')
                 # Redirect to a success page or the home page
                 else:
                     return redirect('profile_update')
@@ -91,12 +91,23 @@ def user_has_completed_form(user):
     return False
 
 
-def renderorder(request):
-    if user_has_completed_form:
+# def renderoption(request):
+#     if user_has_completed_form:
         
-        return render(request, 'orderScreen.html')
+#         return redirect('order')
+#     else:
+#         return render(request, 'login.html')
+    
+def order(request):
+    selected_option = request.GET.get('option')
+    if selected_option:
+        # Use the selected_option variable as needed in this view
+        return render(request, 'orderScreen.html', {'selected_option': selected_option})
     else:
-        return render(request, 'login.html')
+        return HttpResponse("Option not provided.")
+    
+
+
 
 
 def select_option_view(request):
@@ -104,10 +115,13 @@ def select_option_view(request):
         form = SelectionForm(request.POST)
         if form.is_valid():
             selected_option = form.cleaned_data['selected_option']
-            # You can perform some action with the selected_option here
-            # For example, return it as a response or use it in a function
-            return render(request, 'orderScreen.html', {'selected_option': selected_option})
+            # Construct the URL with the selected option as a parameter
+            url = reverse('pickfood') + f'?option={selected_option}'
+            return redirect(url)
     else:
         form = SelectionForm()
 
     return render(request, 'select_option_template.html', {'form': form})
+
+
+

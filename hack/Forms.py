@@ -8,9 +8,8 @@ class UserProfileForm(forms.ModelForm):
         
 class SelectionForm(forms.Form):
     options = [
-        ('option1', 'Option 1'),
-        ('option2', 'Option 2'),
-        ('option3', 'Option 3'),
+        ('Swap', 'Swap'),
+        ('Buy', 'Buy'),
     ]
     
     selected_option = forms.ChoiceField(
