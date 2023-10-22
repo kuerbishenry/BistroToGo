@@ -102,7 +102,10 @@ def order(request):
     selected_option = request.GET.get('option')
     if selected_option:
         # Use the selected_option variable as needed in this view
-        return render(request, 'orderScreen.html', {'selected_option': selected_option})
+        if (selected_option == "Buy"):
+            return render(request, 'orderScreen.html', {'selected_option': selected_option})
+        else:
+            return render(request, 'orderScreenSwipe.html', {'selected_option': selected_option})
     else:
         return HttpResponse("Option not provided.")
     

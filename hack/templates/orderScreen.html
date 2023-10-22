@@ -106,6 +106,23 @@
                     <div class="menu-item">Vegetable Lasagna: $6.99</div>
                     <div class="menu-item">Chicken Parmesan: $7.99</div>
                 </div>
+                <div class = "col-4" id="Sides">
+                    <h2>Sides</h2>
+                    <div class="menu-item">French Fries: $2.99</div>
+                    <div class="menu-item">Onion Rings: $3.49</div>
+                    <div class="menu-item">Coleslaw: $1.99</div>
+                    <div class="menu-item">Mashed Potatoes: $2.79</div>
+                    <div class="menu-item">Sweet Potato Fries: $3.29</div>
+                    <div class="menu-item">Garlic Bread: $2.49</div>
+                    <div class="menu-item">Side Salad: $2.99</div>
+                    <div class "menu-item">Steamed Vegetables: $3.59</div>
+                    <div class="menu-item">Rice Pilaf: $2.89</div>
+                    <div class="menu-item">Corn on the Cob: $1.99</div>
+                    <div class="menu-item">Grilled Asparagus: $3.79</div>
+                    <div class="menu-item">Breaded Mozzarella Sticks: $4.29</div>
+                    <div class="menu-item">Fruit Salad: $3.99</div>
+                    <div class="menu-item">Roasted Potatoes: $2.99</div>
+                </div>
             </div>
             <br>
             <br>
@@ -132,6 +149,21 @@
                             <option value="Spaghetti with Meatballs">Spaghetti with Meatballs</option>
                             <option value="Vegetable Lasagna">Vegetable Lasagna</option>
                             <option value="Chicken Parmesan">Chicken Parmesan</option>
+                            <option value="French Fries">French Fries</option>
+                            <option value="Onion Rings">Onion Rings</option>
+                            <option value="Coleslaw">Coleslaw</option>
+                            <option value="Mashed Potatoes">Mashed Potatoes</option>
+                            <option value="Sweet Potato Fries">Sweet Potato Fries</option>
+                            <option value="Garlic Bread">Garlic Bread</option>
+                            <option value="Side Salad">Side Salad</option>
+                            <option value="Steamed Vegetables">Steamed Vegetables</option>
+                            <option value="Rice Pilaf">Rice Pilaf</option>
+                            <option value="Corn on the Cob">Corn on the Cob</option>
+                            <option value="Macaroni and Cheese">Macaroni and Cheese</option>
+                            <option value="Grilled Asparagus">Grilled Asparagus</option>
+                            <option value="Breaded Mozzarella Sticks">Breaded Mozzarella Sticks</option>
+                            <option value="Fruit Salad">Fruit Salad</option>
+                            <option value="Roasted Potatoes">Roasted Potatoes</option>
                         </select>
                         <br>
                         <label for="quantity">Quantity:</label>
@@ -183,19 +215,55 @@
             "Vegetable Lasagna": 6.99,
             "Chicken Parmesan": 7.99
         };
+        let sides = {
+            "French Fries": 2.99,
+            "Onion Rings": 3.49,
+            "Coleslaw": 1.99,
+            "Mashed Potatoes": 2.79,
+            "Sweet Potato Fries": 3.29,
+            "Garlic Bread": 2.49,
+            "Side Salad": 2.99,
+            "Steamed Vegetables": 3.59,
+            "Rice Pilaf": 2.89,
+            "Corn on the Cob": 1.99,
+            "Macaroni and Cheese": 3.49,
+            "Grilled Asparagus": 3.79,
+            "Breaded Mozzarella Sticks": 4.29,
+            "Fruit Salad": 3.99,
+            "Roasted Potatoes": 2.99
+        };
 
         function addItem() {
             const item = document.getElementById('item').value;
             const quantity = parseInt(document.getElementById('quantity').value);
 
-            if (order[item]) {
-                order[item] += quantity;
-            } else {
+            // Check if the selected item is a meal or a side
+            const isMeal = menu[item] !== undefined;
+            const isSide = sides[item] !== undefined;
+
+            // Count the number of meals and sides in the order
+            const mealCount = Object.keys(order).filter(item => menu[item] !== undefined).length;
+            const sideCount = Object.keys(order).filter(item => sides[item] !== undefined).length;
+            
+
+
+            // If the selected item is a meal, it is not in the order, and there are fewer than one meal in the order, add it to the order
+            if (isMeal && mealCount === 0 && sideCount < 3) {
                 order[item] = quantity;
+            } 
+            // If the selected item is a side, it is not in the order, and there are fewer than two sides in the order, add it to the order
+            else if (isSide && sideCount < 2) {
+                order[item] = quantity;
+            }
+            else if (isSide && sideCount < 3) {
+                if (mealCount == 0) {
+                    order[item] = quantity
+                }
             }
 
             updateOrderSummary();
         }
+
 
         function clearOrder() {
             order = {};
@@ -209,7 +277,7 @@
             let totalCost = 0;
 
             for (const item in order) {
-                const price = parseFloat(menu[item]);
+                const price = isMeal(item) ? menu[item] : sides[item];
                 const quantity = order[item];
                 totalCost += price * quantity;
                 summaryHTML += `<li>${item}: ${quantity}</li>`;
