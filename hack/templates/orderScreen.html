@@ -82,7 +82,7 @@
             <br>
             <br>
             <div class="row">
-                <div class="col-4">
+                <div class="col-4" id="Breakfest">
                     <h2>Breakfast</h2>
                     <div class="menu-item">Bagel with Cream Cheese: $3.99</div>
                     <div class="menu-item">Breakfast Sandwich: $5.99</div>
@@ -90,7 +90,7 @@
                     <div class="menu-item">Box of Cereal: $3.99</div>
                     <div class="menu-item">2 Slices of French Toast: $4.99</div>
                 </div>
-                <div class="col-4">
+                <div class="col-4" id="Lunch">
                     <h2>Lunch</h2>
                     <div class="menu-item">Beef Burger: $5.99</div>
                     <div class="menu-item">Grilled Cheese and Tomato: $4.99</div>
@@ -98,7 +98,7 @@
                     <div class="menu-item">Chicken Patty Sandwich: $4.99</div>
                     <div class="menu-item">Hot Dog: $1.99</div>
                 </div>
-                <div class="col-4">
+                <div class="col-4" id="Dinner">
                     <h2>Dinner</h2>
                     <div class="menu-item">Macaroni and Cheese: $5.99</div>
                     <div class="menu-item">Cheese Manicotti: $8.99</div>
@@ -162,7 +162,7 @@
         <br>
     </main>
     <footer class="text-center">
-        <p>Hackathon 2023 Project Submission - Henry Kuerbis, Zeke Palmer, Dillon Remuck, and Colin Ruiz</p>
+        <p>Hackathon Fall 2023 Project Submission - Henry Kuerbis, Zeke Palmer, Dillon Remuck, and Colin Ruiz</p>
     </footer>
     <script>
         let order = {};
@@ -227,31 +227,60 @@
             updateOrderSummary();
         }
 
-        function currentTime() {
+        function getCurrentTime() {
             const currentDate = new Date();
             const currentHour = currentDate.getHours();
+
+            return currentHour;
+        }
+
+        function updateMealTime() {
+            const currentHour = getCurrentTime();
             const text = document.getElementById("current-mealtime");
 
             let newText = ""; // Default text if no conditions match
 
             if (currentHour >= 6 && currentHour < 11) {
                 newText = "The current meal period is: Breakfast";
+                const lunch = document.getElementById("Lunch");
+                const dinner = document.getElementById("Dinner");
+                lunch.style.opacity = .3;
+                dinner.style.opacity = .3;
             } else if (currentHour >= 11 && currentHour < 16) {
                 newText = "The current meal period is: Lunch";
+                const breakfest = document.getElementById("Breakfest");
+                const dinner = document.getElementById("Dinner");
+                breakfest.style.opacity = .3;
+                dinner.style.opacity = .3;
             }          
             else if (currentHour >= 16 && currentHour < 21){
                 newText = "The current meal period is: Dinner";
+                const breakfest = document.getElementById("Breakfest");
+                const lunch = document.getElementById("Lunch");
+                breakfest.style.opacity = .3;
+                lunch.style.opacity = .3;
             } else if (currentHour >= 21 && currentHour <= 24){
                 newText = "The current meal period is: Late Night"
+                const breakfest = document.getElementById("Breakfest");
+                const lunch = document.getElementById("Lunch");
+                breakfest.style.opacity = .3;
+                lunch.style.opacity = .3;
             } else{
                 newText = "The Bistro is currently closed."
+                const breakfest = document.getElementById("Breakfest");
+                const lunch = document.getElementById("Lunch");
+                const dinner = document.getElementById("Dinner");
+
+                breakfest.style.opacity = .3;
+                lunch.style.opacity = .3;
+                dinner.style.opacity = .3;
             }
 
             // Update the <p> element with the new text
             text.textContent = newText;
         }
 
-        currentTime();
+        updateMealTime();
     </script>
 </body>
 </html>
