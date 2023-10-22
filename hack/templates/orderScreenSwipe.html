@@ -149,6 +149,21 @@
                             <option value="Spaghetti with Meatballs">Spaghetti with Meatballs</option>
                             <option value="Vegetable Lasagna">Vegetable Lasagna</option>
                             <option value="Chicken Parmesan">Chicken Parmesan</option>
+                            <option value="French Fries">French Fries</option>
+                            <option value="Onion Rings">Onion Rings</option>
+                            <option value="Coleslaw">Coleslaw</option>
+                            <option value="Mashed Potatoes">Mashed Potatoes</option>
+                            <option value="Sweet Potato Fries">Sweet Potato Fries</option>
+                            <option value="Garlic Bread">Garlic Bread</option>
+                            <option value="Side Salad">Side Salad</option>
+                            <option value="Steamed Vegetables">Steamed Vegetables</option>
+                            <option value="Rice Pilaf">Rice Pilaf</option>
+                            <option value="Corn on the Cob">Corn on the Cob</option>
+                            <option value="Macaroni and Cheese">Macaroni and Cheese</option>
+                            <option value="Grilled Asparagus">Grilled Asparagus</option>
+                            <option value="Breaded Mozzarella Sticks">Breaded Mozzarella Sticks</option>
+                            <option value="Fruit Salad">Fruit Salad</option>
+                            <option value="Roasted Potatoes">Roasted Potatoes</option>
                         </select>
                         <br>
                         <label for="quantity">Quantity:</label>
@@ -222,6 +237,48 @@
         function addItem() {
             const item = document.getElementById('item').value;
             const quantity = parseInt(document.getElementById('quantity').value);
+        
+            // Check if the selected item is a meal or a side
+            const isMeal = menu[item] !== undefined;
+            const isSide = sides[item] !== undefined;
+        
+            // Count the number of meals and sides in the order
+            const mealCount = Object.keys(order).filter(item => menu[item] !== undefined).length;
+            const sideCount = Object.keys(order).filter(item => sides[item] !== undefined).length;
+        
+            // If the selected item is a meal and there are fewer than 1 meal in the order, add it to the order
+            if (isMeal && mealCount < 1 && sideCount < 3) {
+                if (order[item] === undefined) {
+                    order[item] = quantity;
+                } else {
+                    order[item] += quantity;
+                }
+            } 
+            // If the selected item is a side and there are fewer than 2 sides in the order, add it to the order
+            else if (isSide && sideCount < 2) {
+                if (order[item] === undefined) {
+                    order[item] = quantity;
+                } else {
+                    order[item] += quantity;
+                }
+            }
+            else if (isSide && sideCount < 3) {
+                if (mealCount === 0) {
+                    if (order[item] === undefined) {
+                        order[item] = quantity;
+                    } else {
+                        order[item] += quantity;
+                    }
+                }
+            }
+        
+            updateOrderSummary();
+        }
+        
+
+        {% comment %} function addItem() {
+            const item = document.getElementById('item').value;
+            const quantity = parseInt(document.getElementById('quantity').value);
 
             // Check if the selected item is a meal or a side
             const isMeal = menu[item] !== undefined;
@@ -248,7 +305,7 @@
             }
 
             updateOrderSummary();
-        }
+        } {% endcomment %}
         function clearOrder() {
             order = {};
             updateOrderSummary();
@@ -268,7 +325,7 @@
                 const price = isMeal(item) ? menu[item] : sides[item];
                 const quantity = order[item];
                 //for swaps no need to increase total cost
-                totalCost =1 ;
+                totalCost = 1;
                 summaryHTML += `<li>${item}: ${quantity}</li>`;
             }
 

@@ -236,33 +236,17 @@
         function addItem() {
             const item = document.getElementById('item').value;
             const quantity = parseInt(document.getElementById('quantity').value);
-
-            // Check if the selected item is a meal or a side
-            const isMeal = menu[item] !== undefined;
-            const isSide = sides[item] !== undefined;
-
-            // Count the number of meals and sides in the order
-            const mealCount = Object.keys(order).filter(item => menu[item] !== undefined).length;
-            const sideCount = Object.keys(order).filter(item => sides[item] !== undefined).length;
-            
-
-
-            // If the selected item is a meal, it is not in the order, and there are fewer than one meal in the order, add it to the order
-            if (isMeal && mealCount === 0 && sideCount < 3) {
-                order[item] = quantity;
-            } 
-            // If the selected item is a side, it is not in the order, and there are fewer than two sides in the order, add it to the order
-            else if (isSide && sideCount < 2) {
+        
+            if(order[item]){
+                order[item] += quantity;
+            }
+            else{
                 order[item] = quantity;
             }
-            else if (isSide && sideCount < 3) {
-                if (mealCount == 0) {
-                    order[item] = quantity
-                }
-            }
-
+        
             updateOrderSummary();
         }
+        
 
 
         function clearOrder() {
