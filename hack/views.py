@@ -24,7 +24,7 @@ def signup(request):
             user = form.save()
             login(request, user)# Log in the user after registration
             if (user_has_completed_form(user)):
-                return redirect('order')
+                return redirect('orderScreen')
                 # Redirect to a success page or the home page
             else:
                 return redirect('profile_update')  # Replace 'home' with your desired URL name
@@ -43,7 +43,7 @@ def login_view(request):
             if user:
                 login(request, user)
                 if (user_has_completed_form(user)):
-                    return redirect('order')
+                    return redirect('orderScreen')
                 # Redirect to a success page or the home page
                 else:
                     return redirect('profile_update')
