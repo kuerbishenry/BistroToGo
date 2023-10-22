@@ -1,0 +1,6 @@
+body {
+    background-image: url('/hack/styling/images/CULogo.png');
+    background-size: cover; 
+    background-position: center; 
+    background-attachment: fixed; 
+}

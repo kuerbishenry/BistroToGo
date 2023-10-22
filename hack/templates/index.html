@@ -11,20 +11,22 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </head>
 <body>
+    <br>
+    <br>
     <div class="row">
         <div class="col justify-content-center">
-            <h1>Welcome to the Home Page</h1>
+            <h1 class="text-center">Welcome to the Home Page</h1>
         </div>
     </div>
     <br>
     <div class="row">
         <div class="col-6">
-            <p>Click the button below to go to the login page.</p>
-            <a href="{% url 'login' %}" class="btn btn-primary">Login</a>
+            <p class="text-center">Click the button below to go to the login page.</p>
+            <a href="{% url 'login' %}" class="btn btn-primary text-center">Login</a>
         </div>
         <div class="col-6">
-            <p>Don't have an account, Sign up</p>
-            <a href="{% url 'signup' %}" class="btn btn-primary">Sign up</a>
+            <p class="text-center">Don't have an account, Sign up</p>
+            <a href="{% url 'signup' %}" class="btn btn-primary text-center">Sign up</a>
         </div>
     </div>
     <br>
