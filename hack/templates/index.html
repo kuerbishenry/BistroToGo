@@ -1,15 +1,33 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Home Page</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CU Bistro Online Order Landing Page</title>
+    <!-- Add Bootstrap CSS and JavaScript -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </head>
 <body>
-    <h1>Welcome to the Home Page</h1>
-    <p>Click the button below to go to the login page.</p>
-    <a href="{% url 'login' %}" class="btn btn-primary">Login</a>
+    <div class="row">
+        <div class="col justify-content-center">
+            <h1>Welcome to the Home Page</h1>
+        </div>
+    </div>
+    <br>
+    <div class="row">
+        <div class="col-6">
+            <p>Click the button below to go to the login page.</p>
+            <a href="{% url 'login' %}" class="btn btn-primary">Login</a>
+        </div>
+        <div class="col-6">
+            <p>Don't have an account, Sign up</p>
+            <a href="{% url 'signup' %}" class="btn btn-primary">Sign up</a>
+        </div>
+    </div>
     <br>
     <br>
-    <p>Don't have an account, Sign up</p>
-    <a href="{% url 'signup' %}" class="btn btn-primary">Sign up</a>
 </body>
 </html>
